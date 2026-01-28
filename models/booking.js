@@ -4,9 +4,9 @@ const mongoose = require("mongoose");
 
 const bookingSchema = new mongoose.Schema(
   {
-    trip: { type: mongoose.Schema.Types.ObjectId, ref: "trips", required: true },
+    trip: { type: mongoose.Schema.Types.ObjectId, ref: "Trip", required: true },
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("bookings", bookingSchema);
+module.exports = mongoose.model("Booking", bookingSchema);
