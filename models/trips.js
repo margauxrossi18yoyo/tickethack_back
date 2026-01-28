@@ -17,4 +17,4 @@ const tripSchema = new mongoose.Schema(
 // Index (cohérent avec le schéma)
 tripSchema.index({ departure: 1, arrival: 1, date: 1 });
 
-module.exports = mongoose.model("Trip", tripSchema);
+module.exports = mongoose.model("trips", tripSchema);

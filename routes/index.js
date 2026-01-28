@@ -4,18 +4,20 @@ var router = express.Router();
 const Trip = require("../models/trips");
 const Cart = require("../models/cart");
 const Booking = require("../models/booking");
+Trip.find().then(data => console.log(data))
 
 // 1) recherche de trajets, page d'accueil
 //POST /trips/search
 //Body: { departure, arrival, date: "YYYY-MM-DD" }
 //Retour: { result: true, trips: [...] } ou { result: true, trips: [] }
+
 router.post("/trips/search", (req, res) => {
   const { departure, arrival, date } = req.body;
-
-  // si un champ manque → pas de recherche
+console.log(req.body)
+   //si un champ manque → pas de recherche
   if (!departure || !arrival || !date) {
     return res.json({ result: false, trips: [] });
-  }
+ }
 
   const start = new Date(date);
   start.setHours(0, 0, 0, 0);
@@ -24,12 +26,13 @@ router.post("/trips/search", (req, res) => {
   end.setHours(23, 59, 59, 999);
 
   Trip.find({
-    departure: departure.trim(),
-    arrival: arrival.trim(),
+    departure: new RegExp(departure.trim(), 'i'),
+    arrival: new RegExp(arrival.trim(), 'i'),
     date: { $gte: start, $lte: end },
   })
-    .sort({ date: 1 })
+   .sort({ date: 1 })
     .then((trips) => {
+      console.log(trips)
       if (trips.length > 0) {
         res.json({ result: true, trips: trips });
       } else {
